@@ -1,0 +1,12 @@
+{
+  "name": "13thdec2025",
+  "version": "1.0.0",
+  "main": "callStack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "node callStack.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
