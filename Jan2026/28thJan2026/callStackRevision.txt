@@ -1,0 +1,24 @@
+What is Call stack and explan ?
+Call stuck is a fundamental mechanism of javaScript which is used to keep the track of function exeqution. It follows the LIFO Rule (Last in First out)
+
+When a program started running, a global exeqution context will be created in the call stack, Once the function called a exeqution context will be created for that function and it pushed on top of it and once it returned it poped off from the stuck. Once all finished the stuck will be empty and the program completed it's exeqution.
+
+What is event loop ?
+The event loop is a mechanism that check weather the call stuck is empty or not. By the help of it the call back of asynchronous function pushed into the call stuck. that means with out blocking the main thrad of exeqution it process the next.
+
+What is MicrotaskQueue. Explan with example ?
+
+Microtaskqueue is also known as Jobqueue. It is an asynchronous high priorting task . it always proceed first over macrotaskqueue.
+
+Peomises and fetch call back are the example of it
+
+Promise.resove(1).then(consol.log)
+
+What is Macrotaskqueue ? explan with example .
+
+Macrotaskqueue are also knon as taskque. it is low priorting asynchronous task. which is always execute after the MicrotaskQueue. setTimeout, setInterval are the example of macrotaskqueue
+
+setTimeout(()=>console.log("Macrotask"))
+
+Why javaScript is Single threaded?
+JavaScript is single threaded because it has only one call stuck. But event loop is the heart of JS. it keeps proceeding the tasks without blocking the main thread.
