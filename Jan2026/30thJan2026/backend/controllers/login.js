@@ -8,7 +8,7 @@ async function login(req, res) {
     if (!email || !password) {
       return res.status(400).json({ message: "Email & Password required" });
     }
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email }).lean();
     if (!user) {
       return res.status(401).json({ message: "Invalid Credential" });
     }

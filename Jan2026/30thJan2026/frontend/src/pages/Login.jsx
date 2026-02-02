@@ -1,9 +1,46 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import manWithLaptop from "../assets/auth/manWithLaptop.png";
 import logo from "../assets/auth/logo.png";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../api/axios";
+import { LoginSchema } from "../validation/loginSchema";
+import { toast } from "react-toastify";
 
 export default function Login() {
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await api.post("/login", data);
+
+      // 1️⃣ Save token
+      localStorage.setItem("token", res.data.token);
+
+      // 2️⃣ Read role
+      const role = res.data.user.role;
+
+      toast.success("Login successful 🎉");
+
+      // 3️⃣ Navigate based on role
+      if (role === "Admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/user");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Invalid email or password");
+    }
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-left">
@@ -23,12 +60,23 @@ export default function Login() {
         <h1>Welcome Back</h1>
         <p className="subtitle">Login to your account</p>
 
-        <form className="auth-form">
-          <input type="email" placeholder="Email Address" />
-          <input type="password" placeholder="Password" />
-
-          <button type="submit" className="btn-primary">
-            Login
+        <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="email"
+            placeholder="Email Address"
+            {...register("email")}
+          />
+          {errors.email && <p className="error">{errors.email.message}</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+          />
+          {errors.password && (
+            <p className="error">{errors.password.message}</p>
+          )}
+          <button type="submit" className="btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? "Navigating..." : "Login"}
           </button>
         </form>
 

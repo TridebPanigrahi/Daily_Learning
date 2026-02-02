@@ -5,7 +5,7 @@ import { getUserRole } from "../utils/getUserRole";
 const PrivateRoutes = ({ children, allowedRoles }) => {
   const roles = getUserRole();
   if (!roles) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   if (!allowedRoles.includes(roles)) {
     return <Navigate to="/unauthorized" />;

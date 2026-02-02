@@ -8,6 +8,7 @@ body {
 }
 
 .auth-container {
+  width: 100vw;
   height: 100vh;
   display: flex;
   background: linear-gradient(120deg, #c6ffdd, #fbd786, #f7797d);
