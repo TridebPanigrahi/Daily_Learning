@@ -3,6 +3,8 @@ const express = require("express");
 const connectDb = require("./db/dbConnection");
 const cors = require("cors");
 const userRouter = require("./routes/userRoutes");
+const authRouter = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -13,6 +15,8 @@ const app = express();
 //   }),
 // );
 
+app.use(cookieParser());
+
 app.use(cors());
 
 // App-level middleware
@@ -20,6 +24,7 @@ app.use(express.json());
 
 //routers
 app.use("/api", userRouter);
+app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 5000;
 

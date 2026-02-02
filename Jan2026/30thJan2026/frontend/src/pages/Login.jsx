@@ -7,9 +7,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../api/axios";
 import { LoginSchema } from "../validation/loginSchema";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
-  const navigate = useNavigate()
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,12 +23,10 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await api.post("/login", data);
+      const res = await api.post("/auth/login", data);
 
-      // 1️⃣ Save token
-      localStorage.setItem("token", res.data.token);
+      login(res.data.token);
 
-      // 2️⃣ Read role
       const role = res.data.user.role;
 
       toast.success("Login successful 🎉");

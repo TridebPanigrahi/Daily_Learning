@@ -16,16 +16,34 @@ async function login(req, res) {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid Credential" });
     }
-    const token = jwt.sign(
+
+    //Access Token
+    const accessToken = jwt.sign(
       { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
+      process.env.JWT_ACCESS_SECRET,
       {
-        expiresIn: "1d",
+        expiresIn: "15m",
       },
     );
+
+    //Refresh token
+    const refreshToken = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: "7d" },
+    );
+
+    // SET REFRESH TOKEN IN HTTP-ONLY COOKIE
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
     res.status(200).json({
       message: "Login Successfully",
-      token,
+      token:accessToken,
       user: {
         id: user._id,
         name: user.name,
