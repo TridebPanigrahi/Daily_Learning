@@ -1,10 +1,5 @@
 function delay(ms) {
-  const p = Promise.resolve(ms).then(() => {
-    setTimeout(() => {
-      console.log("Promise Resolved");
-    }, ms);
-  });
-  return p;
+  return new Promise((resolve) => setTimeout(resolve(), ms));
 }
 
-delay(2000);
+delay(2000).then(()=>console.log("Done"))
