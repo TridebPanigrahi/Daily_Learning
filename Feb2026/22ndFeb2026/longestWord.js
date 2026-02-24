@@ -1,5 +1,5 @@
 function longestWord(str) {
-  const newStr = str.replace(/[^a-zA-Z\s]/);
+  const newStr = str.replace(/[^a-zA-Z\s]/g, "");
   const strArr = newStr.split(/\s+/);
   let result = "";
   for (let word of strArr) {
