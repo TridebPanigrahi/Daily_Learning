@@ -1,16 +1,17 @@
 function productOfarr(arr) {
-  let result = Array.from(arr).fill(1);
+  let result = new Array(arr.length).fill(1);
   let leftOne = 1;
   for (let i = 0; i < arr.length; i++) {
-    result[i] = result[i] * leftOne;
-    // leftOne++;
+    result[i] = leftOne;
+    leftOne *= arr[i];
   }
 
   let rightOne = 1;
   for (let i = arr.length - 1; i >= 0; i--) {
-    result[i] = result[i] * rightOne;
-    // rightOne++;
+    result[i] *= rightOne;
+    rightOne *= arr[i];
   }
+
   return result;
 }
 
