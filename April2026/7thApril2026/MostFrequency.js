@@ -9,7 +9,6 @@ function frequency(arr, k) {
       .slice(0, k),
   );
   return Object.keys(sortedObj);
-  // 8653535631;
 }
 
 console.log(frequency([1, 1, 1, 2, 3, 4, 5, 5], 2));
