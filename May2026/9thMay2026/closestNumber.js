@@ -12,17 +12,23 @@
 function closestNum(n, m) {
   let next = n + 1;
   let prev = n - 1;
-  while (next % m !== 0 || prev % m !== 0) {
+  while (next % m !== 0 && prev % m !== 0) {
     next++;
     prev--;
   }
   let nextDiff = next - n;
   let prevDiff = n - prev;
-  if (nextDiff > prevDiff) {
+  if (nextDiff === prevDiff) {
+    if (prev % m === 0) {
+      return prev;
+    } else {
+      return next;
+    }
+  } else if (prev % m === 0) {
     return prev;
   } else {
     return next;
   }
 }
 
-console.log(closestNum(13, 4));
+console.log(closestNum(-15, 6));
